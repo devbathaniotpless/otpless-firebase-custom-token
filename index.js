@@ -38,6 +38,9 @@ app.get('/auth', (req, res) => {
                 });
         });
 });
+app.get('/', (req, res) => {
+    res.json("Hello Welcome to OTPless");
+});
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
