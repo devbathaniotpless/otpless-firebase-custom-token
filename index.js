@@ -16,7 +16,15 @@ app.get('/auth', (req, res) => {
     console.log("number " + phoneNumber);
     admin.auth().getUserByPhoneNumber(`+${phoneNumber}`)
         .then((userRecord) => {
-            res.json({ uid: userRecord.uid, phoneNumber: `+${phoneNumber}` });
+            admin.auth()
+                .createCustomToken(userRecord.uid)
+                .then((customToken) => {
+                    res.json({ token: customToken });
+                })
+                .catch((error) => {
+                    console.log('Error creating custom token:', error);
+                });
+
         })
         .catch((error) => {
             console.log('Error fetching user data:', error);
@@ -30,8 +38,15 @@ app.get('/auth', (req, res) => {
 
             })
                 .then((userRecord) => {
-                    // See the UserRecord reference doc for the contents of userRecord.
-                    res.json({ uid: userRecord.uid, phoneNumber: `+${phoneNumber}` });
+                    admin.auth()
+                        .createCustomToken(userRecord.uid)
+                        .then((customToken) => {
+                            res.json({ token: customToken });
+                        })
+                        .catch((error) => {
+                            console.log('Error creating custom token:', error);
+                        });
+
                 })
                 .catch((error) => {
                     console.log('Error creating new user:', error);
